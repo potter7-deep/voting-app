@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: voting-app
+    name: voting-app-kimathi
     env: node
     region: oregon
     buildCommand: npm install && cd server && npm install && cd ../client && npm install && cd ../client && npm run build
@@ -12,11 +12,10 @@ services:
       - key: PORT
         value: 5000
       - key: CORS_ORIGIN
-        value: https://voting-app.onrender.com
+        value: https://voting-app-kimathi.onrender.com
       - key: JWT_SECRET
         value: voting-app-production-secret-key-2024-secure
-      - key: DATABASE_URL
-        value: postgres://voting:password@voting-db.internal/voting
+      # DATABASE_URL will be auto-set by Render when you add the PostgreSQL database
       
       # Client Environment Variables (passed to Vite at build time)
       - key: VITE_API_URL
