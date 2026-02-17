@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [coalitionForm, setCoalitionForm] = useState({ name: '', symbol: '', color: '#10b981' });
   const [candidateForm, setCandidateForm] = useState({ name: '', position: '', bio: '', image: null });
   const [activeCoalitionTab, setActiveCoalitionTab] = useState('coalitions');
+  const [addingCoalition, setAddingCoalition] = useState(false);
   const [electionResults, setElectionResults] = useState(null);
   const [passwordForm, setPasswordForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
   const [passwordError, setPasswordError] = useState('');
@@ -104,6 +105,8 @@ const Dashboard = () => {
   const handleAddCoalition = async (e) => {
     e.preventDefault();
     if (!selectedElection) return;
+    
+    setAddingCoalition(true);
     try {
       const response = await coalitionsAPI.create({
         electionId: selectedElection.id,
@@ -112,10 +115,22 @@ const Dashboard = () => {
       if (response.data.success) {
         alert('Coalition added successfully!');
         setCoalitionForm({ name: '', symbol: '', color: '#10b981' });
-        openElectionModal(selectedElection.id);
+        
+        // Close the current modal and reopen to refresh data
+        setShowElectionModal(false);
+        
+        // Small delay to ensure state is cleared before reopening
+        setTimeout(async () => {
+          await openElectionModal(selectedElection.id);
+          setShowElectionModal(true);
+        }, 100);
       }
     } catch (error) {
-      alert(error.response?.data?.message || 'Error adding coalition');
+      console.error('Add coalition error:', error);
+      const errorMessage = error.response?.data?.message || error.message || 'Error adding coalition';
+      alert(errorMessage);
+    } finally {
+      setAddingCoalition(false);
     }
   };
 
@@ -542,7 +557,9 @@ const Dashboard = () => {
                         className="h-10 w-16 rounded cursor-pointer"
                       />
                     </div>
-                    <button type="submit" className="btn btn-primary">Add</button>
+                    <button type="submit" className="btn btn-primary" disabled={addingCoalition}>
+                      {addingCoalition ? 'Adding...' : 'Add'}
+                    </button>
                   </form>
                 </div>
 
