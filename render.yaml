@@ -3,7 +3,7 @@ services:
     name: voting-app-kimathi
     env: node
     region: oregon
-    buildCommand: npm install && cd server && npm install && cd ../client && npm install && cd ../client && npm run build
+    buildCommand: npm install && cd server && npm install && cd ../client && npm install && npm run build
     startCommand: cd server && npm start
     envVars:
       # Server Environment Variables
