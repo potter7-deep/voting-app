@@ -3,8 +3,8 @@ services:
     name: voting-app
     env: node
     region: oregon
-    buildCommand: npm run install:all && npm run build
-    startCommand: npm run start:prod
+    buildCommand: npm install && cd server && npm install && cd ../client && npm install && cd ../client && npm run build
+    startCommand: cd server && npm start
     envVars:
       # Server Environment Variables
       - key: NODE_ENV
@@ -29,6 +29,7 @@ services:
       enabled: true
       mountPath: /app/server
       sizeGB: 1
+      # SQLite storage will be at /app/server/voting_system.sqlite
 
 # PostgreSQL Option (recommended for production with higher traffic)
 # To use PostgreSQL instead of SQLite:
