@@ -14,7 +14,7 @@ services:
       - key: CORS_ORIGIN
         value: https://voting-app.onrender.com
       - key: JWT_SECRET
-        generateValue: true
+        value: voting-app-production-secret-key-2024-secure
       - key: DB_PATH
         value: /app/server/voting_system.sqlite
       
@@ -26,10 +26,9 @@ services:
       - key: VITE_DEBUG_MODE
         value: "false"
     disk:
-      enabled: true
+      name: voting-app-data
       mountPath: /app/server
       sizeGB: 1
-      # SQLite storage will be at /app/server/voting_system.sqlite
 
 # PostgreSQL Option (recommended for production with higher traffic)
 # To use PostgreSQL instead of SQLite:
