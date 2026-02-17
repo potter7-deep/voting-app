@@ -56,10 +56,10 @@ const Register = () => {
   };
 
   return (
-    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="max-w-md mx-auto">
-        <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-          <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-[#10b981] to-[#14b8a6] bg-clip-text text-transparent">
+    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+      <div className="max-w-sm sm:max-w-md mx-auto">
+        <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4 sm:mb-6 bg-gradient-to-r from-[#10b981] to-[#14b8a6] bg-clip-text text-transparent">
             Register
           </h2>
 
@@ -69,9 +69,9 @@ const Register = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Full Name
               </label>
               <input
@@ -79,14 +79,14 @@ const Register = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="input"
+                className="input text-base sm:text-sm"
                 placeholder="John Doe"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Email
               </label>
               <input
@@ -94,14 +94,14 @@ const Register = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="input"
+                className="input text-base sm:text-sm"
                 placeholder="your.email@student.kmu.ac.ke"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Registration Number
               </label>
               <input
@@ -109,21 +109,21 @@ const Register = () => {
                 name="registrationNumber"
                 value={formData.registrationNumber}
                 onChange={handleChange}
-                className="input"
+                className="input text-base sm:text-sm"
                 placeholder="SCIT/001/2020"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Year of Study
               </label>
               <select
                 name="year"
                 value={formData.year}
                 onChange={handleChange}
-                className="input"
+                className="input text-base sm:text-sm"
                 required
               >
                 <option value="">Select Year</option>
@@ -135,7 +135,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                 Password
               </label>
               <input
@@ -143,7 +143,7 @@ const Register = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="input"
+                className="input text-base sm:text-sm"
                 placeholder="Minimum 6 characters"
                 required
               />
@@ -152,13 +152,13 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary w-full"
+              className="btn btn-primary w-full py-3"
             >
               {loading ? 'Registering...' : 'Register'}
             </button>
           </form>
 
-          <p className="text-center mt-6 text-gray-600 dark:text-gray-400">
+          <p className="text-center mt-4 sm:mt-6 text-sm sm:text-base text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
             <Link to="/login" className="text-[#10b981] font-semibold hover:underline">
               Login here

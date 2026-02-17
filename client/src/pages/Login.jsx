@@ -30,10 +30,10 @@ const Login = () => {
   };
 
   return (
-    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="max-w-md mx-auto">
-        <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-          <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-[#10b981] to-[#14b8a6] bg-clip-text text-transparent">
+    <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+      <div className="max-w-sm sm:max-w-md mx-auto">
+        <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4 sm:mb-6 bg-gradient-to-r from-[#10b981] to-[#14b8a6] bg-clip-text text-transparent">
             Login
           </h2>
 
@@ -52,7 +52,7 @@ const Login = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="input"
+                className="input text-base sm:text-sm"
                 placeholder="your.email@student.kmu.ac.ke"
                 required
               />
@@ -66,7 +66,7 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input"
+                className="input text-base sm:text-sm"
                 placeholder="Enter your password"
                 required
               />
@@ -75,13 +75,13 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary w-full"
+              className="btn btn-primary w-full py-3"
             >
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
 
-          <p className="text-center mt-6 text-gray-600 dark:text-gray-400">
+          <p className="text-center mt-4 sm:mt-6 text-sm sm:text-base text-gray-600 dark:text-gray-400">
             Don't have an account?{' '}
             <Link to="/register" className="text-[#10b981] font-semibold hover:underline">
               Register here
