@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: voting-app
+    env: node
+    region: oregon
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      # Server Environment Variables
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: CORS_ORIGIN
+        value: https://voting-app.onrender.com
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /app/server/voting_system.sqlite
+      
+      # Client Environment Variables (passed to Vite at build time)
+      - key: VITE_API_URL
+        value: /api
+      - key: VITE_APP_TITLE
+        value: University Voting System
+      - key: VITE_DEBUG_MODE
+        value: "false"
+    disk:
+      enabled: true
+      mountPath: /app/server
+      sizeGB: 1
+
+# PostgreSQL Option (recommended for production with higher traffic)
+# To use PostgreSQL instead of SQLite:
+# 1. Comment out the disk section above
+# 2. Uncomment the database below
+# 3. Update server/index.js to use PostgreSQL dialect
+#
+# databases:
+#   - name: voting-db
+#     databaseName: voting
+#     user: voting
+#     plan: free
+
