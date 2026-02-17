@@ -9,8 +9,6 @@
     "numReplicas": 1,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10,
-    "healthcheckPath": "/api/health",
-    "healthcheckPort": 5000,
     "startCommand": "cd server && npm start"
   },
   "env": {
@@ -18,16 +16,16 @@
       "runtime": "NODE_ENV=production"
     },
     "PORT": {
-      "runtime": "PORT=5000"
+      "runtime": "PORT=${{PORT}}"
     },
     "CORS_ORIGIN": {
       "runtime": "CORS_ORIGIN=${{RAILWAY_PUBLIC_DOMAIN}}"
     },
     "JWT_SECRET": {
-      "runtime": "JWT_SECRET=railway-voting-app-secret-key-2024-secure"
+      "runtime": "JWT_SECRET=voting-app-prod-secret-2024"
     },
     "DB_PATH": {
-      "runtime": "DB_PATH=/app/server/voting_system.sqlite"
+      "runtime": "DB_PATH=./voting_system.sqlite"
     },
     "VITE_API_URL": {
       "runtime": "VITE_API_URL=/api"
