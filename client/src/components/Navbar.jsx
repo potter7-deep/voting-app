@@ -40,7 +40,7 @@ const Navbar = () => {
           {/* Brand */}
           <Link to="/" className="flex items-center gap-3 group">
             <img 
-              src="/img/k.png" 
+              src="/img/this.png" 
               alt="Kimathi Voting System" 
               className="w-24 sm:w-32 md:w-40 lg:w-48 h-auto object-contain bg-transparent"
             />
