@@ -15,8 +15,8 @@ services:
         value: https://voting-app.onrender.com
       - key: JWT_SECRET
         value: voting-app-production-secret-key-2024-secure
-      - key: DB_PATH
-        value: /app/server/voting_system.sqlite
+      - key: DATABASE_URL
+        value: postgres://voting:password@voting-db.internal/voting
       
       # Client Environment Variables (passed to Vite at build time)
       - key: VITE_API_URL
@@ -25,20 +25,10 @@ services:
         value: University Voting System
       - key: VITE_DEBUG_MODE
         value: "false"
-    disk:
-      name: voting-app-data
-      mountPath: /app/server
-      sizeGB: 1
 
-# PostgreSQL Option (recommended for production with higher traffic)
-# To use PostgreSQL instead of SQLite:
-# 1. Comment out the disk section above
-# 2. Uncomment the database below
-# 3. Update server/index.js to use PostgreSQL dialect
-#
-# databases:
-#   - name: voting-db
-#     databaseName: voting
-#     user: voting
-#     plan: free
+databases:
+  - name: voting-db
+    databaseName: voting
+    user: voting
+    plan: free
 

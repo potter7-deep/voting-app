@@ -122,7 +122,8 @@ app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Voting System API is running (SQLite)' });
+  const dbType = usePostgres ? 'PostgreSQL' : 'SQLite';
+  res.json({ status: 'ok', message: `Voting System API is running (${dbType})` });
 });
 
 // Serve static files in production
@@ -154,26 +155,55 @@ app.use((req, res) => {
   });
 });
 
-// SQLite Database Setup
+// Database Configuration - Supports both SQLite and PostgreSQL
 const PORT = process.env.PORT || 5000;
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'voting_system.sqlite');
+const DATABASE_URL = process.env.DATABASE_URL;
 
 // Determine if we should bind to all interfaces or localhost only
 const HOST = isProduction ? '0.0.0.0' : 'localhost';
 
-console.log('Initializing SQLite database at:', DB_PATH);
-console.log('Environment:', isProduction ? 'production' : 'development');
+// Check if using PostgreSQL (when DATABASE_URL is provided)
+const usePostgres = !!DATABASE_URL;
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: DB_PATH,
-  logging: false, // Set to console.log for debugging
-  define: {
-    timestamps: true,
-    underscored: true,
-    freezeTableName: true
-  }
-});
+let sequelize;
+
+if (usePostgres) {
+  // PostgreSQL Configuration
+  console.log('Initializing PostgreSQL database...');
+  console.log('Environment:', isProduction ? 'production' : 'development');
+  
+  sequelize = new Sequelize(DATABASE_URL, {
+    dialect: 'postgres',
+    logging: false,
+    define: {
+      timestamps: true,
+      underscored: true,
+      freezeTableName: true
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
+} else {
+  // SQLite Configuration (default for development)
+  console.log('Initializing SQLite database at:', DB_PATH);
+  console.log('Environment:', isProduction ? 'production' : 'development');
+  
+  sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: DB_PATH,
+    logging: false,
+    define: {
+      timestamps: true,
+      underscored: true,
+      freezeTableName: true
+    }
+  });
+}
 
 // Initialize models
 const UserModel = User(sequelize);
@@ -303,10 +333,12 @@ const startElectionStatusScheduler = () => {
   console.log('✓ Election status scheduler started (runs every 5 minutes)');
 };
 
-// Connect to SQLite and start server
+// Connect to database and start server
+const dbType = usePostgres ? 'PostgreSQL' : 'SQLite';
+
 sequelize.sync({ force: false })
   .then(async () => {
-    console.log('✓ Database synchronized with SQLite');
+    console.log(`✓ Database synchronized with ${dbType}`);
     
     // Create default admin user after successful sync
     await createDefaultAdmin();
